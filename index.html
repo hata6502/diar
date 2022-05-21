@@ -8,12 +8,11 @@
   <body>
     <script type="module">
       // TODO: 祝日のタグを付けるのもいいかも。
-
-      const locale = "ja-JP";
-
-      const hashtag = (string) => `#${string.replaceAll(" ", "_")}`;
-
       try {
+        const locale = "ja-JP";
+
+        const hashtag = (string) => `#${string.replaceAll(" ", "_")}`;
+
         const urlSearchParams = new URLSearchParams(location.search);
         const projectName = urlSearchParams.get("projectName");
 
@@ -30,11 +29,9 @@
           weekday: "long",
         }).format(nowDate);
 
-        const body = `${pageTitle}
+        const body = `
 
-
-${hashtag(monthDay)} ${hashtag(day)} ${hashtag(weekday)}
-`;
+${hashtag(monthDay)} ${hashtag(day)} ${hashtag(weekday)}`;
 
         location.href = `https://scrapbox.io/${encodeURIComponent(
           projectName
