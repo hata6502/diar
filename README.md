@@ -1,6 +1,6 @@
 # diar
 
-Create a new scrapbox page from the template.
+Just create a new scrapbox page from the template.
 Please fork me to customize!
 
 ## Usage
