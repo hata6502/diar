@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>diar</title>
+  </head>
+
+  <body>
+    <script type="module">
+      // TODO: 祝日のタグを付けるのもいいかも。
+
+      const locale = "ja-JP";
+
+      const hashtag = (string) => `#${string.replaceAll(" ", "_")}`;
+
+      try {
+        const urlSearchParams = new URLSearchParams(location.search);
+        const projectName = urlSearchParams.get("projectName");
+
+        const nowDate = new Date();
+        const pageTitle = new Intl.DateTimeFormat(locale).format(nowDate);
+        const monthDay = new Intl.DateTimeFormat(locale, {
+          month: "numeric",
+          day: "numeric",
+        }).format(nowDate);
+        const day = new Intl.DateTimeFormat(locale, {
+          day: "numeric",
+        }).format(nowDate);
+        const weekday = new Intl.DateTimeFormat(locale, {
+          weekday: "long",
+        }).format(nowDate);
+
+        const body = `${pageTitle}
+
+
+${hashtag(monthDay)} ${hashtag(day)} ${hashtag(weekday)}
+`;
+
+        location.href = `https://scrapbox.io/${encodeURIComponent(
+          projectName
+        )}/${encodeURIComponent(pageTitle)}?${new URLSearchParams([
+          ["body", body],
+        ]).toString()}`;
+      } catch (exception) {
+        alert(exception);
+      }
+    </script>
+  </body>
+</html>
