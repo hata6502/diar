@@ -6,8 +6,8 @@
   </head>
 
   <body>
+    <script src="https://cdn.rawgit.com/osamutake/japanese-holidays-js/v1.0.10/lib/japanese-holidays.min.js"></script>
     <script type="module">
-      // TODO: 祝日のタグを付けるのもいいかも。
       try {
         const locale = "ja-JP";
 
@@ -18,20 +18,26 @@
 
         const nowDate = new Date();
         const pageTitle = new Intl.DateTimeFormat(locale).format(nowDate);
+        const holiday = JapaneseHolidays.isHoliday(nowDate);
+
         const monthDay = new Intl.DateTimeFormat(locale, {
           month: "numeric",
           day: "numeric",
         }).format(nowDate);
+
         const day = new Intl.DateTimeFormat(locale, {
           day: "numeric",
         }).format(nowDate);
+
         const weekday = new Intl.DateTimeFormat(locale, {
           weekday: "long",
         }).format(nowDate);
 
         const body = `
 
-${hashtag(monthDay)} ${hashtag(day)} ${hashtag(weekday)}`;
+${[...(holiday ? [holiday] : []), monthDay, day, weekday]
+  .map(hashtag)
+  .join(" ")}`;
 
         location.href = `https://scrapbox.io/${encodeURIComponent(
           projectName
